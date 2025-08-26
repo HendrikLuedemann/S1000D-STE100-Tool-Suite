@@ -12,4 +12,6 @@ Lint flags:
   - Simple passive voice (be + VERBed)
 
 Quick start (PowerShell):
-  python ste100_linter.py --rebuild --text "The operator starts the system and does the procedure in 25 minutes."
+```
+python ste100_linter.py --rebuild --text "The operator starts the system and does the procedure in 25 minutes."
+```
