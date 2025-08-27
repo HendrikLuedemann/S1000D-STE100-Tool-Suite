@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:dc="http://www.purl.org/dc/elements/1.1/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.purl.org/dc/elements/1.1/" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>
+			*****************************************************************************
+			*                                                                           *
+			*                        S1000D Issue 2                                     *
+			*                          XML Schema                                       *
+			*                                                                           *
+			*                     Release Version 2.3                                   *
+			*                       Date: 2007-02-28                                    *
+			*                                                                           *
+			*                                                                           *
+			* The following import statement may be used to call this set of            *
+			* declarations:-                                                            *
+			*                                                                           *
+			* xsi:dc=                                                                   *
+			* "http://www.s1000d.org/S1000D_2-3/xml_schema_master/dm/dc.xsd"            *
+			*****************************************************************************
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="title" type="xs:string"/>
+	<xs:element name="creator" type="xs:string"/>
+	<xs:element name="subject" type="xs:string"/>
+	<xs:element name="publisher" type="xs:string"/>
+	<xs:element name="contributor" type="xs:string"/>
+	<xs:element name="date" type="xs:date"/>
+	<xs:element name="type" type="xs:string" fixed="text"/>
+	<xs:element name="format" type="xs:string" fixed="text/xml"/>
+	<xs:element name="identifier" type="xs:string"/>
+	<xs:element name="language" type="dc:LANGUAGE-COUNTRY"/>
+	<xs:element name="rights" type="dc:SECURITY"/>
+
+	<xs:group name="DCMES">
+		<xs:choice>
+			<xs:element ref="dc:title"/>
+			<xs:element ref="dc:creator"/>
+			<xs:element ref="dc:subject"/>
+			<xs:element ref="dc:publisher"/>
+			<xs:element ref="dc:contributor"/>
+			<xs:element ref="dc:date"/>
+			<xs:element ref="dc:type"/>
+			<xs:element ref="dc:format"/>
+			<xs:element ref="dc:identifier"/>
+			<xs:element ref="dc:language"/>
+			<xs:element ref="dc:rights"/>
+		</xs:choice>
+	</xs:group>
+
+	<xs:simpleType name="SECURITY">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,2}(_(cc[0-9]{2})?(_cv[0-9]{2})?)?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="LANGUAGE-COUNTRY">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-z]{2,3}(-[A-Z]{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

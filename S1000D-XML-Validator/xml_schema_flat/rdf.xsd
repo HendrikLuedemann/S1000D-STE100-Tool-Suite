@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dc="http://www.purl.org/dc/elements/1.1/" targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>
+			*****************************************************************************     
+			*                                                                           *
+			*                        S1000D Issue 2                                     *
+			*                          XML Schema                                       *
+			*                                                                           *
+			*                     Release Version 2.0                                   *
+			*                       Date: 2003-05-31                                    *
+			*                                                                           *
+			* Amendment:-                                                               *
+			* 1. New public identifier: Resource Description Framework (RDF)            *
+			*                           definitions for optional use on element         *
+			*                           dmodule (XML DMs only). Content model of        *
+			*                           element rdf:Description references the          *
+			*                           Dublin Core (DC) element set relevant           *
+			*                           for S1000D in group DCMES (see DC.XSD).         *
+			*                                                                           *
+			* The following import statement may be used to call this set of            *
+			* declarations:-                                                            *
+			*                                                                           *
+			* xsi:rdf="http://www.s1000d.org/S1000D_2-3/xml_schema_master/dm/rdf.xsd"   *
+			*****************************************************************************
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:import namespace="http://www.purl.org/dc/elements/1.1/" schemaLocation="dc.xsd"/>
+	
+	<xs:element name="Description">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="dc:DCMES" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

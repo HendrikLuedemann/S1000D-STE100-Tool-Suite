@@ -1,0 +1,1181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="qualified"
+    elementFormDefault="qualified"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+    <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+    <xs:element name="comment" type="commentType"/>
+    <xs:complexType name="commentType">
+        <xs:sequence>
+            <xs:element minOccurs="0" ref="rdf:Description"/>
+            <xs:element ref="cstatus"/>
+            <xs:element ref="ccontent"/>
+        </xs:sequence>
+        <xs:attribute ref="id"/>
+    </xs:complexType>
+    <xs:element name="cstatus" type="cstatusType"/>
+    <xs:complexType name="cstatusType">
+        <xs:sequence>
+            <xs:element ref="ccode"/>
+            <xs:element minOccurs="0" ref="ctitle"/>
+            <xs:element ref="issdate"/>
+            <xs:element minOccurs="0" ref="language"/>
+            <xs:element ref="corig"/>
+            <xs:element ref="security"/>
+            <xs:element minOccurs="0" ref="datarest"/>
+            <xs:element ref="priority"/>
+            <xs:element minOccurs="0" ref="response"/>
+            <xs:element ref="crefs"/>
+            <xs:element minOccurs="0" ref="remarks"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ccode" type="ccodeType"/>
+    <xs:complexType name="ccodeType">
+        <xs:sequence>
+            <xs:element ref="modelic"/>
+            <xs:element ref="sendid"/>
+            <xs:element ref="diyear"/>
+            <xs:element ref="seqnum"/>
+            <xs:element ref="ctype"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="modelic" type="modelicType"/>
+    <xs:simpleType name="modelicType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{2,14}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="sendid" type="NCAGEcode"/>
+    <xs:simpleType name="NCAGEcode">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="diyear" type="diyearType"/>
+    <xs:simpleType name="diyearType">
+        <xs:restriction base="xs:gYear">
+            <xs:pattern value="[0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="seqnum" type="seqnumType"/>
+    <xs:simpleType name="seqnumType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:pattern value="[0-9]{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ctype" type="ctypeType"/>
+    <xs:complexType name="ctypeType">
+        <xs:attribute name="type" type="ctypetypeType" use="required"/>
+    </xs:complexType>
+    <xs:simpleType name="ctypetypeType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="q"/>
+            <xs:enumeration value="i"/>
+            <xs:enumeration value="r"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ctitle" type="xs:string"/>
+    <xs:element name="issdate" type="issdateType"/>
+    <xs:complexType name="issdateType">
+        <xs:attributeGroup ref="DATE"/>
+    </xs:complexType>
+    <xs:attributeGroup name="DATE">
+        <xs:attribute ref="year" use="required"/>
+        <xs:attribute ref="month" use="required"/>
+        <xs:attribute ref="day" use="required"/>
+    </xs:attributeGroup>
+    <xs:attribute name="year" type="yearType"/>
+    <xs:simpleType name="yearType">
+        <xs:restriction base="xs:gYear">
+            <xs:pattern value="\d{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attribute name="month" type="MONTH"/>
+    <xs:simpleType name="MONTH">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:maxInclusive value="12"/>
+            <xs:pattern value="\d{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attribute name="day" type="DAY"/>
+    <xs:simpleType name="DAY">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:maxInclusive value="31"/>
+            <xs:pattern value="\d{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attribute name="language" type="languageAttType"/>
+    <xs:simpleType name="languageAttType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z]{2,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="language" type="languageType"/>
+    <xs:complexType name="languageType">
+        <xs:attribute ref="language" use="required"/>
+        <xs:attribute ref="country"/>
+    </xs:complexType>
+    <xs:attribute name="country" type="countryType"/>
+    <xs:simpleType name="countryType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="corig" type="corigType"/>
+    <xs:complexType name="corigType">
+        <xs:sequence>
+            <xs:element ref="dispaddr"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="dispaddr" type="dispaddrType"/>
+    <xs:complexType name="dispaddrType">
+        <xs:sequence>
+            <xs:element ref="enterprise"/>
+            <xs:element minOccurs="0" ref="person"/>
+            <xs:element ref="address"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="enterprise" type="enterpriseType"/>
+    <xs:complexType name="enterpriseType">
+        <xs:sequence>
+            <xs:element ref="ent-name"/>
+            <xs:element minOccurs="0" ref="division"/>
+            <xs:element minOccurs="0" ref="ent-unit"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="ent-name" type="xs:string"/>
+    <xs:element name="division" type="xs:string"/>
+    <xs:element name="ent-unit" type="xs:string"/>
+    <xs:attributeGroup name="bodyatt">
+        <xs:attribute ref="id"/>
+        <xs:attributeGroup ref="INSDEL"/>
+    </xs:attributeGroup>
+    <xs:attribute name="id" type="xs:ID"/>
+    <xs:attributeGroup name="INSDEL">
+        <xs:attribute ref="level"/>
+        <xs:attribute ref="mark"/>
+        <xs:attribute ref="change"/>
+        <xs:attribute ref="rfc"/>
+    </xs:attributeGroup>
+    <xs:attribute name="level" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="mark" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="change" type="changeType"/>
+    <xs:simpleType name="changeType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="add"/>
+            <xs:enumeration value="delete"/>
+            <xs:enumeration value="modify"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attribute name="rfc" type="xs:string"/>
+    <xs:element name="person" type="personType"/>
+    <xs:complexType name="personType">
+        <xs:sequence>
+            <xs:element ref="lastname"/>
+            <xs:element minOccurs="0" ref="firstname"/>
+            <xs:element minOccurs="0" ref="jobtitle"/>
+        </xs:sequence>
+        <xs:attribute name="prefix" type="xs:string"/>
+    </xs:complexType>
+    <xs:element name="lastname" type="xs:string"/>
+    <xs:element name="firstname" type="xs:string"/>
+    <xs:element name="jobtitle" type="xs:string"/>
+    <xs:element name="address" type="addressType"/>
+    <xs:complexType name="addressType">
+        <xs:sequence>
+            <xs:element minOccurs="0" ref="dept"/>
+            <xs:element minOccurs="0" ref="street"/>
+            <xs:element minOccurs="0" ref="pobox"/>
+            <xs:element minOccurs="0" ref="zip"/>
+            <xs:element ref="city"/>
+            <xs:element minOccurs="0" ref="postcode"/>
+            <xs:element ref="country"/>
+            <xs:element minOccurs="0" ref="state"/>
+            <xs:element minOccurs="0" ref="province"/>
+            <xs:element minOccurs="0" ref="building"/>
+            <xs:element minOccurs="0" ref="room"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="phone"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="fax"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="email"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="internet"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="dept" type="xs:string"/>
+    <xs:element name="street" type="xs:string"/>
+    <xs:element name="pobox" type="xs:string"/>
+    <xs:element name="zip" type="xs:string"/>
+    <xs:element name="city" type="xs:string"/>
+    <xs:element name="postcode" type="xs:string"/>
+    <xs:element name="country" type="xs:string"/>
+    <xs:element name="state" type="xs:string"/>
+    <xs:element name="province" type="xs:string"/>
+    <xs:element name="building" type="xs:string"/>
+    <xs:element name="room" type="xs:string"/>
+    <xs:element name="phone" type="xs:string"/>
+    <xs:element name="fax" type="xs:string"/>
+    <xs:element name="email" type="xs:string"/>
+    <xs:element name="internet" type="xs:string"/>
+    <xs:element name="security" type="securityType"/>
+    <xs:complexType name="securityType">
+        <xs:attributeGroup ref="SECURIT"/>
+    </xs:complexType>
+    <xs:attributeGroup name="SECURIT">
+        <xs:attribute ref="class" use="required"/>
+        <xs:attributeGroup ref="COMMSEC"/>
+    </xs:attributeGroup>
+    <xs:attribute name="class" type="CLASSES"/>
+    <xs:simpleType name="CLASSES">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="01"/>
+            <xs:enumeration value="02"/>
+            <xs:enumeration value="03"/>
+            <xs:enumeration value="04"/>
+            <xs:enumeration value="05"/>
+            <xs:enumeration value="06"/>
+            <xs:enumeration value="07"/>
+            <xs:enumeration value="08"/>
+            <xs:enumeration value="09"/>
+            <xs:enumeration value="10"/>
+            <xs:enumeration value="11"/>
+            <xs:enumeration value="12"/>
+            <xs:enumeration value="13"/>
+            <xs:enumeration value="14"/>
+            <xs:enumeration value="15"/>
+            <xs:enumeration value="16"/>
+            <xs:enumeration value="17"/>
+            <xs:enumeration value="18"/>
+            <xs:enumeration value="19"/>
+            <xs:enumeration value="20"/>
+            <xs:enumeration value="21"/>
+            <xs:enumeration value="22"/>
+            <xs:enumeration value="23"/>
+            <xs:enumeration value="24"/>
+            <xs:enumeration value="25"/>
+            <xs:enumeration value="26"/>
+            <xs:enumeration value="27"/>
+            <xs:enumeration value="28"/>
+            <xs:enumeration value="29"/>
+            <xs:enumeration value="30"/>
+            <xs:enumeration value="31"/>
+            <xs:enumeration value="32"/>
+            <xs:enumeration value="33"/>
+            <xs:enumeration value="34"/>
+            <xs:enumeration value="35"/>
+            <xs:enumeration value="36"/>
+            <xs:enumeration value="37"/>
+            <xs:enumeration value="38"/>
+            <xs:enumeration value="39"/>
+            <xs:enumeration value="40"/>
+            <xs:enumeration value="41"/>
+            <xs:enumeration value="42"/>
+            <xs:enumeration value="43"/>
+            <xs:enumeration value="44"/>
+            <xs:enumeration value="45"/>
+            <xs:enumeration value="46"/>
+            <xs:enumeration value="47"/>
+            <xs:enumeration value="48"/>
+            <xs:enumeration value="49"/>
+            <xs:enumeration value="50"/>
+            <xs:enumeration value="51"/>
+            <xs:enumeration value="52"/>
+            <xs:enumeration value="53"/>
+            <xs:enumeration value="54"/>
+            <xs:enumeration value="55"/>
+            <xs:enumeration value="56"/>
+            <xs:enumeration value="57"/>
+            <xs:enumeration value="58"/>
+            <xs:enumeration value="59"/>
+            <xs:enumeration value="60"/>
+            <xs:enumeration value="61"/>
+            <xs:enumeration value="62"/>
+            <xs:enumeration value="63"/>
+            <xs:enumeration value="64"/>
+            <xs:enumeration value="65"/>
+            <xs:enumeration value="66"/>
+            <xs:enumeration value="67"/>
+            <xs:enumeration value="68"/>
+            <xs:enumeration value="69"/>
+            <xs:enumeration value="70"/>
+            <xs:enumeration value="71"/>
+            <xs:enumeration value="72"/>
+            <xs:enumeration value="73"/>
+            <xs:enumeration value="74"/>
+            <xs:enumeration value="75"/>
+            <xs:enumeration value="76"/>
+            <xs:enumeration value="77"/>
+            <xs:enumeration value="78"/>
+            <xs:enumeration value="79"/>
+            <xs:enumeration value="80"/>
+            <xs:enumeration value="81"/>
+            <xs:enumeration value="82"/>
+            <xs:enumeration value="83"/>
+            <xs:enumeration value="84"/>
+            <xs:enumeration value="85"/>
+            <xs:enumeration value="86"/>
+            <xs:enumeration value="87"/>
+            <xs:enumeration value="88"/>
+            <xs:enumeration value="89"/>
+            <xs:enumeration value="90"/>
+            <xs:enumeration value="91"/>
+            <xs:enumeration value="92"/>
+            <xs:enumeration value="93"/>
+            <xs:enumeration value="94"/>
+            <xs:enumeration value="95"/>
+            <xs:enumeration value="96"/>
+            <xs:enumeration value="97"/>
+            <xs:enumeration value="98"/>
+            <xs:enumeration value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attributeGroup name="COMMSEC">
+        <xs:attribute ref="commcls"/>
+        <xs:attribute ref="caveat"/>
+    </xs:attributeGroup>
+    <xs:attribute name="commcls" type="COMMCLSS"/>
+    <xs:simpleType name="COMMCLSS">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="cc01"/>
+            <xs:enumeration value="cc02"/>
+            <xs:enumeration value="cc03"/>
+            <xs:enumeration value="cc04"/>
+            <xs:enumeration value="cc05"/>
+            <xs:enumeration value="cc06"/>
+            <xs:enumeration value="cc07"/>
+            <xs:enumeration value="cc08"/>
+            <xs:enumeration value="cc09"/>
+            <xs:enumeration value="cc10"/>
+            <xs:enumeration value="cc11"/>
+            <xs:enumeration value="cc12"/>
+            <xs:enumeration value="cc13"/>
+            <xs:enumeration value="cc14"/>
+            <xs:enumeration value="cc15"/>
+            <xs:enumeration value="cc16"/>
+            <xs:enumeration value="cc17"/>
+            <xs:enumeration value="cc18"/>
+            <xs:enumeration value="cc19"/>
+            <xs:enumeration value="cc20"/>
+            <xs:enumeration value="cc21"/>
+            <xs:enumeration value="cc22"/>
+            <xs:enumeration value="cc23"/>
+            <xs:enumeration value="cc24"/>
+            <xs:enumeration value="cc25"/>
+            <xs:enumeration value="cc26"/>
+            <xs:enumeration value="cc27"/>
+            <xs:enumeration value="cc28"/>
+            <xs:enumeration value="cc29"/>
+            <xs:enumeration value="cc30"/>
+            <xs:enumeration value="cc31"/>
+            <xs:enumeration value="cc32"/>
+            <xs:enumeration value="cc33"/>
+            <xs:enumeration value="cc34"/>
+            <xs:enumeration value="cc35"/>
+            <xs:enumeration value="cc36"/>
+            <xs:enumeration value="cc37"/>
+            <xs:enumeration value="cc38"/>
+            <xs:enumeration value="cc39"/>
+            <xs:enumeration value="cc40"/>
+            <xs:enumeration value="cc41"/>
+            <xs:enumeration value="cc42"/>
+            <xs:enumeration value="cc43"/>
+            <xs:enumeration value="cc44"/>
+            <xs:enumeration value="cc45"/>
+            <xs:enumeration value="cc46"/>
+            <xs:enumeration value="cc47"/>
+            <xs:enumeration value="cc48"/>
+            <xs:enumeration value="cc49"/>
+            <xs:enumeration value="cc50"/>
+            <xs:enumeration value="cc51"/>
+            <xs:enumeration value="cc52"/>
+            <xs:enumeration value="cc53"/>
+            <xs:enumeration value="cc54"/>
+            <xs:enumeration value="cc55"/>
+            <xs:enumeration value="cc56"/>
+            <xs:enumeration value="cc57"/>
+            <xs:enumeration value="cc58"/>
+            <xs:enumeration value="cc59"/>
+            <xs:enumeration value="cc60"/>
+            <xs:enumeration value="cc61"/>
+            <xs:enumeration value="cc62"/>
+            <xs:enumeration value="cc63"/>
+            <xs:enumeration value="cc64"/>
+            <xs:enumeration value="cc65"/>
+            <xs:enumeration value="cc66"/>
+            <xs:enumeration value="cc67"/>
+            <xs:enumeration value="cc68"/>
+            <xs:enumeration value="cc69"/>
+            <xs:enumeration value="cc70"/>
+            <xs:enumeration value="cc71"/>
+            <xs:enumeration value="cc72"/>
+            <xs:enumeration value="cc73"/>
+            <xs:enumeration value="cc74"/>
+            <xs:enumeration value="cc75"/>
+            <xs:enumeration value="cc76"/>
+            <xs:enumeration value="cc77"/>
+            <xs:enumeration value="cc78"/>
+            <xs:enumeration value="cc79"/>
+            <xs:enumeration value="cc80"/>
+            <xs:enumeration value="cc81"/>
+            <xs:enumeration value="cc82"/>
+            <xs:enumeration value="cc83"/>
+            <xs:enumeration value="cc84"/>
+            <xs:enumeration value="cc85"/>
+            <xs:enumeration value="cc86"/>
+            <xs:enumeration value="cc87"/>
+            <xs:enumeration value="cc88"/>
+            <xs:enumeration value="cc89"/>
+            <xs:enumeration value="cc90"/>
+            <xs:enumeration value="cc91"/>
+            <xs:enumeration value="cc92"/>
+            <xs:enumeration value="cc93"/>
+            <xs:enumeration value="cc94"/>
+            <xs:enumeration value="cc95"/>
+            <xs:enumeration value="cc96"/>
+            <xs:enumeration value="cc97"/>
+            <xs:enumeration value="cc98"/>
+            <xs:enumeration value="cc99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attribute name="caveat" type="CAVEATS"/>
+    <xs:simpleType name="CAVEATS">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="cv01"/>
+            <xs:enumeration value="cv02"/>
+            <xs:enumeration value="cv03"/>
+            <xs:enumeration value="cv04"/>
+            <xs:enumeration value="cv05"/>
+            <xs:enumeration value="cv06"/>
+            <xs:enumeration value="cv07"/>
+            <xs:enumeration value="cv08"/>
+            <xs:enumeration value="cv09"/>
+            <xs:enumeration value="cv10"/>
+            <xs:enumeration value="cv11"/>
+            <xs:enumeration value="cv12"/>
+            <xs:enumeration value="cv13"/>
+            <xs:enumeration value="cv14"/>
+            <xs:enumeration value="cv15"/>
+            <xs:enumeration value="cv16"/>
+            <xs:enumeration value="cv17"/>
+            <xs:enumeration value="cv18"/>
+            <xs:enumeration value="cv19"/>
+            <xs:enumeration value="cv20"/>
+            <xs:enumeration value="cv21"/>
+            <xs:enumeration value="cv22"/>
+            <xs:enumeration value="cv23"/>
+            <xs:enumeration value="cv24"/>
+            <xs:enumeration value="cv25"/>
+            <xs:enumeration value="cv26"/>
+            <xs:enumeration value="cv27"/>
+            <xs:enumeration value="cv28"/>
+            <xs:enumeration value="cv29"/>
+            <xs:enumeration value="cv30"/>
+            <xs:enumeration value="cv31"/>
+            <xs:enumeration value="cv32"/>
+            <xs:enumeration value="cv33"/>
+            <xs:enumeration value="cv34"/>
+            <xs:enumeration value="cv35"/>
+            <xs:enumeration value="cv36"/>
+            <xs:enumeration value="cv37"/>
+            <xs:enumeration value="cv38"/>
+            <xs:enumeration value="cv39"/>
+            <xs:enumeration value="cv40"/>
+            <xs:enumeration value="cv41"/>
+            <xs:enumeration value="cv42"/>
+            <xs:enumeration value="cv43"/>
+            <xs:enumeration value="cv44"/>
+            <xs:enumeration value="cv45"/>
+            <xs:enumeration value="cv46"/>
+            <xs:enumeration value="cv47"/>
+            <xs:enumeration value="cv48"/>
+            <xs:enumeration value="cv49"/>
+            <xs:enumeration value="cv50"/>
+            <xs:enumeration value="cv51"/>
+            <xs:enumeration value="cv52"/>
+            <xs:enumeration value="cv53"/>
+            <xs:enumeration value="cv54"/>
+            <xs:enumeration value="cv55"/>
+            <xs:enumeration value="cv56"/>
+            <xs:enumeration value="cv57"/>
+            <xs:enumeration value="cv58"/>
+            <xs:enumeration value="cv59"/>
+            <xs:enumeration value="cv60"/>
+            <xs:enumeration value="cv61"/>
+            <xs:enumeration value="cv62"/>
+            <xs:enumeration value="cv63"/>
+            <xs:enumeration value="cv64"/>
+            <xs:enumeration value="cv65"/>
+            <xs:enumeration value="cv66"/>
+            <xs:enumeration value="cv67"/>
+            <xs:enumeration value="cv68"/>
+            <xs:enumeration value="cv69"/>
+            <xs:enumeration value="cv70"/>
+            <xs:enumeration value="cv71"/>
+            <xs:enumeration value="cv72"/>
+            <xs:enumeration value="cv73"/>
+            <xs:enumeration value="cv74"/>
+            <xs:enumeration value="cv75"/>
+            <xs:enumeration value="cv76"/>
+            <xs:enumeration value="cv77"/>
+            <xs:enumeration value="cv78"/>
+            <xs:enumeration value="cv79"/>
+            <xs:enumeration value="cv80"/>
+            <xs:enumeration value="cv81"/>
+            <xs:enumeration value="cv82"/>
+            <xs:enumeration value="cv83"/>
+            <xs:enumeration value="cv84"/>
+            <xs:enumeration value="cv85"/>
+            <xs:enumeration value="cv86"/>
+            <xs:enumeration value="cv87"/>
+            <xs:enumeration value="cv88"/>
+            <xs:enumeration value="cv89"/>
+            <xs:enumeration value="cv90"/>
+            <xs:enumeration value="cv91"/>
+            <xs:enumeration value="cv92"/>
+            <xs:enumeration value="cv93"/>
+            <xs:enumeration value="cv94"/>
+            <xs:enumeration value="cv95"/>
+            <xs:enumeration value="cv96"/>
+            <xs:enumeration value="cv97"/>
+            <xs:enumeration value="cv98"/>
+            <xs:enumeration value="cv99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="datarest" type="datarestType"/>
+    <xs:complexType name="datarestType">
+        <xs:sequence>
+            <xs:element ref="instruct"/>
+            <xs:element minOccurs="0" ref="inform"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="instruct" type="instructType"/>
+    <xs:complexType name="instructType">
+        <xs:sequence>
+            <xs:element ref="distrib"/>
+            <xs:element minOccurs="0" ref="expcont"/>
+            <xs:element minOccurs="0" ref="handling"/>
+            <xs:element minOccurs="0" ref="destruct"/>
+            <xs:element minOccurs="0" ref="disclose"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="distrib" type="distribType"/>
+    <xs:complexType mixed="true" name="distribType">
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="expcont" type="expcontType"/>
+    <xs:complexType mixed="true" name="expcontType">
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="handling" type="handlingType"/>
+    <xs:complexType mixed="true" name="handlingType">
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="destruct" type="destructType"/>
+    <xs:complexType mixed="true" name="destructType">
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="disclose" type="discloseType"/>
+    <xs:complexType mixed="true" name="discloseType">
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="inform" type="informType"/>
+    <xs:complexType name="informType">
+        <xs:sequence>
+            <xs:element ref="copyright"/>
+            <xs:element minOccurs="0" ref="polref"/>
+            <xs:element minOccurs="0" ref="datacond"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="copyright" type="copyrightType"/>
+    <xs:complexType name="copyrightType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="p"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="p" type="pType"/>
+    <xs:complexType mixed="true" name="pType">
+        <xs:group maxOccurs="unbounded" minOccurs="0" ref="SPARCON"/>
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:group name="SPARCON">
+        <xs:choice>
+            <xs:element ref="subscrpt"/>
+            <xs:element ref="supscrpt"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="subscrpt" type="xs:string"/>
+    <xs:element name="supscrpt" type="xs:string"/>
+    <xs:element name="polref" type="polrefType"/>
+    <xs:complexType mixed="true" name="polrefType">
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="datacond" type="datacondType"/>
+    <xs:complexType mixed="true" name="datacondType">
+        <xs:attributeGroup ref="bodyatt"/>
+    </xs:complexType>
+    <xs:element name="priority" type="priorityType"/>
+    <xs:complexType name="priorityType">
+        <xs:attribute ref="cprio" use="required"/>
+    </xs:complexType>
+    <xs:attribute name="cprio" type="CPRIOS"/>
+    <xs:simpleType name="CPRIOS">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="cp01"/>
+            <xs:enumeration value="cp02"/>
+            <xs:enumeration value="cp03"/>
+            <xs:enumeration value="cp04"/>
+            <xs:enumeration value="cp05"/>
+            <xs:enumeration value="cp06"/>
+            <xs:enumeration value="cp07"/>
+            <xs:enumeration value="cp08"/>
+            <xs:enumeration value="cp09"/>
+            <xs:enumeration value="cp10"/>
+            <xs:enumeration value="cp11"/>
+            <xs:enumeration value="cp12"/>
+            <xs:enumeration value="cp13"/>
+            <xs:enumeration value="cp14"/>
+            <xs:enumeration value="cp15"/>
+            <xs:enumeration value="cp16"/>
+            <xs:enumeration value="cp17"/>
+            <xs:enumeration value="cp18"/>
+            <xs:enumeration value="cp19"/>
+            <xs:enumeration value="cp20"/>
+            <xs:enumeration value="cp21"/>
+            <xs:enumeration value="cp22"/>
+            <xs:enumeration value="cp23"/>
+            <xs:enumeration value="cp24"/>
+            <xs:enumeration value="cp25"/>
+            <xs:enumeration value="cp26"/>
+            <xs:enumeration value="cp27"/>
+            <xs:enumeration value="cp28"/>
+            <xs:enumeration value="cp29"/>
+            <xs:enumeration value="cp30"/>
+            <xs:enumeration value="cp31"/>
+            <xs:enumeration value="cp32"/>
+            <xs:enumeration value="cp33"/>
+            <xs:enumeration value="cp34"/>
+            <xs:enumeration value="cp35"/>
+            <xs:enumeration value="cp36"/>
+            <xs:enumeration value="cp37"/>
+            <xs:enumeration value="cp38"/>
+            <xs:enumeration value="cp39"/>
+            <xs:enumeration value="cp40"/>
+            <xs:enumeration value="cp41"/>
+            <xs:enumeration value="cp42"/>
+            <xs:enumeration value="cp43"/>
+            <xs:enumeration value="cp44"/>
+            <xs:enumeration value="cp45"/>
+            <xs:enumeration value="cp46"/>
+            <xs:enumeration value="cp47"/>
+            <xs:enumeration value="cp48"/>
+            <xs:enumeration value="cp49"/>
+            <xs:enumeration value="cp50"/>
+            <xs:enumeration value="cp51"/>
+            <xs:enumeration value="cp52"/>
+            <xs:enumeration value="cp53"/>
+            <xs:enumeration value="cp54"/>
+            <xs:enumeration value="cp55"/>
+            <xs:enumeration value="cp56"/>
+            <xs:enumeration value="cp57"/>
+            <xs:enumeration value="cp58"/>
+            <xs:enumeration value="cp59"/>
+            <xs:enumeration value="cp60"/>
+            <xs:enumeration value="cp61"/>
+            <xs:enumeration value="cp62"/>
+            <xs:enumeration value="cp63"/>
+            <xs:enumeration value="cp64"/>
+            <xs:enumeration value="cp65"/>
+            <xs:enumeration value="cp66"/>
+            <xs:enumeration value="cp67"/>
+            <xs:enumeration value="cp68"/>
+            <xs:enumeration value="cp69"/>
+            <xs:enumeration value="cp70"/>
+            <xs:enumeration value="cp71"/>
+            <xs:enumeration value="cp72"/>
+            <xs:enumeration value="cp73"/>
+            <xs:enumeration value="cp74"/>
+            <xs:enumeration value="cp75"/>
+            <xs:enumeration value="cp76"/>
+            <xs:enumeration value="cp77"/>
+            <xs:enumeration value="cp78"/>
+            <xs:enumeration value="cp79"/>
+            <xs:enumeration value="cp80"/>
+            <xs:enumeration value="cp81"/>
+            <xs:enumeration value="cp82"/>
+            <xs:enumeration value="cp83"/>
+            <xs:enumeration value="cp84"/>
+            <xs:enumeration value="cp85"/>
+            <xs:enumeration value="cp86"/>
+            <xs:enumeration value="cp87"/>
+            <xs:enumeration value="cp88"/>
+            <xs:enumeration value="cp89"/>
+            <xs:enumeration value="cp90"/>
+            <xs:enumeration value="cp91"/>
+            <xs:enumeration value="cp92"/>
+            <xs:enumeration value="cp93"/>
+            <xs:enumeration value="cp94"/>
+            <xs:enumeration value="cp95"/>
+            <xs:enumeration value="cp96"/>
+            <xs:enumeration value="cp97"/>
+            <xs:enumeration value="cp98"/>
+            <xs:enumeration value="cp99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="response" type="responseType"/>
+    <xs:complexType name="responseType">
+        <xs:attribute ref="rsptype" use="required"/>
+    </xs:complexType>
+    <xs:attribute name="rsptype" type="RSPTYPES"/>
+    <xs:simpleType name="RSPTYPES">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="rt01"/>
+            <xs:enumeration value="rt02"/>
+            <xs:enumeration value="rt03"/>
+            <xs:enumeration value="rt04"/>
+            <xs:enumeration value="rt05"/>
+            <xs:enumeration value="rt06"/>
+            <xs:enumeration value="rt07"/>
+            <xs:enumeration value="rt08"/>
+            <xs:enumeration value="rt09"/>
+            <xs:enumeration value="rt10"/>
+            <xs:enumeration value="rt11"/>
+            <xs:enumeration value="rt12"/>
+            <xs:enumeration value="rt13"/>
+            <xs:enumeration value="rt14"/>
+            <xs:enumeration value="rt15"/>
+            <xs:enumeration value="rt16"/>
+            <xs:enumeration value="rt17"/>
+            <xs:enumeration value="rt18"/>
+            <xs:enumeration value="rt19"/>
+            <xs:enumeration value="rt20"/>
+            <xs:enumeration value="rt21"/>
+            <xs:enumeration value="rt22"/>
+            <xs:enumeration value="rt23"/>
+            <xs:enumeration value="rt24"/>
+            <xs:enumeration value="rt25"/>
+            <xs:enumeration value="rt26"/>
+            <xs:enumeration value="rt27"/>
+            <xs:enumeration value="rt28"/>
+            <xs:enumeration value="rt29"/>
+            <xs:enumeration value="rt30"/>
+            <xs:enumeration value="rt31"/>
+            <xs:enumeration value="rt32"/>
+            <xs:enumeration value="rt33"/>
+            <xs:enumeration value="rt34"/>
+            <xs:enumeration value="rt35"/>
+            <xs:enumeration value="rt36"/>
+            <xs:enumeration value="rt37"/>
+            <xs:enumeration value="rt38"/>
+            <xs:enumeration value="rt39"/>
+            <xs:enumeration value="rt40"/>
+            <xs:enumeration value="rt41"/>
+            <xs:enumeration value="rt42"/>
+            <xs:enumeration value="rt43"/>
+            <xs:enumeration value="rt44"/>
+            <xs:enumeration value="rt45"/>
+            <xs:enumeration value="rt46"/>
+            <xs:enumeration value="rt47"/>
+            <xs:enumeration value="rt48"/>
+            <xs:enumeration value="rt49"/>
+            <xs:enumeration value="rt50"/>
+            <xs:enumeration value="rt51"/>
+            <xs:enumeration value="rt52"/>
+            <xs:enumeration value="rt53"/>
+            <xs:enumeration value="rt54"/>
+            <xs:enumeration value="rt55"/>
+            <xs:enumeration value="rt56"/>
+            <xs:enumeration value="rt57"/>
+            <xs:enumeration value="rt58"/>
+            <xs:enumeration value="rt59"/>
+            <xs:enumeration value="rt60"/>
+            <xs:enumeration value="rt61"/>
+            <xs:enumeration value="rt62"/>
+            <xs:enumeration value="rt63"/>
+            <xs:enumeration value="rt64"/>
+            <xs:enumeration value="rt65"/>
+            <xs:enumeration value="rt66"/>
+            <xs:enumeration value="rt67"/>
+            <xs:enumeration value="rt68"/>
+            <xs:enumeration value="rt69"/>
+            <xs:enumeration value="rt70"/>
+            <xs:enumeration value="rt71"/>
+            <xs:enumeration value="rt72"/>
+            <xs:enumeration value="rt73"/>
+            <xs:enumeration value="rt74"/>
+            <xs:enumeration value="rt75"/>
+            <xs:enumeration value="rt76"/>
+            <xs:enumeration value="rt77"/>
+            <xs:enumeration value="rt78"/>
+            <xs:enumeration value="rt79"/>
+            <xs:enumeration value="rt80"/>
+            <xs:enumeration value="rt81"/>
+            <xs:enumeration value="rt82"/>
+            <xs:enumeration value="rt83"/>
+            <xs:enumeration value="rt84"/>
+            <xs:enumeration value="rt85"/>
+            <xs:enumeration value="rt86"/>
+            <xs:enumeration value="rt87"/>
+            <xs:enumeration value="rt88"/>
+            <xs:enumeration value="rt89"/>
+            <xs:enumeration value="rt90"/>
+            <xs:enumeration value="rt91"/>
+            <xs:enumeration value="rt92"/>
+            <xs:enumeration value="rt93"/>
+            <xs:enumeration value="rt94"/>
+            <xs:enumeration value="rt95"/>
+            <xs:enumeration value="rt96"/>
+            <xs:enumeration value="rt97"/>
+            <xs:enumeration value="rt98"/>
+            <xs:enumeration value="rt99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="crefs" type="crefsType"/>
+    <xs:complexType name="crefsType">
+        <xs:choice>
+            <xs:element ref="cnorefs"/>
+            <xs:element ref="crefdms"/>
+            <xs:element ref="crefdmls"/>
+            <xs:element ref="crefpms"/>
+            <xs:element ref="crefddns"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="cnorefs" type="cnorefsType"/>
+    <xs:complexType name="cnorefsType"/>
+    <xs:element name="crefdms" type="crefdmsType"/>
+    <xs:complexType name="crefdmsType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" ref="crefdm"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="crefdm" type="crefdmType"/>
+    <xs:complexType name="crefdmType">
+        <xs:choice>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="dmcextension"/>
+                <xs:element ref="dmc"/>
+                <xs:element minOccurs="0" ref="dmtitle"/>
+                <xs:element minOccurs="0" ref="issno"/>
+                <xs:element minOccurs="0" ref="issdate"/>
+                <xs:element minOccurs="0" ref="language"/>
+            </xs:sequence>
+            <xs:group maxOccurs="unbounded" minOccurs="0" ref="xlink:XLINKEXT"/>
+        </xs:choice>
+        <xs:attributeGroup ref="xlink:XLINKATT4"/>
+    </xs:complexType>
+    <xs:element name="dmcextension" type="dmcextensionType"/>
+    <xs:complexType name="dmcextensionType">
+        <xs:sequence>
+            <xs:element ref="dmeproducer"/>
+            <xs:element ref="dmecode"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="dmeproducer" type="xs:string"/>
+    <xs:element name="dmecode" type="xs:string"/>
+    <xs:element name="dmc" type="dmcType"/>
+    <xs:complexType name="dmcType">
+        <xs:group ref="ALLDMC"/>
+    </xs:complexType>
+    <xs:group name="ALLDMC">
+        <xs:choice>
+            <xs:element ref="age"/>
+            <xs:element ref="avee"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="age" type="ageType"/>
+    <xs:complexType name="ageType">
+        <xs:sequence>
+            <xs:element ref="modelic"/>
+            <xs:element ref="supeqvc"/>
+            <xs:element ref="ecscs"/>
+            <xs:element ref="eidc"/>
+            <xs:element ref="cidc"/>
+            <xs:element ref="discode"/>
+            <xs:element ref="discodev"/>
+            <xs:element ref="incode"/>
+            <xs:element ref="incodev"/>
+            <xs:element ref="itemloc"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="supeqvc" type="supeqvcType"/>
+    <xs:simpleType name="supeqvcType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{1,4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ecscs" type="ecscsType"/>
+    <xs:simpleType name="ecscsType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{2,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="eidc" type="eidcType"/>
+    <xs:simpleType name="eidcType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="cidc" type="cidcType"/>
+    <xs:simpleType name="cidcType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([A-Za-z0-9]{2}|[A-Za-z0-9]{4})"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="discode" type="discodeType"/>
+    <xs:simpleType name="discodeType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="discodev" type="discodevType"/>
+    <xs:simpleType name="discodevType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{1,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="incode" type="incodeType"/>
+    <xs:simpleType name="incodeType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="incodev" type="incodevType"/>
+    <xs:simpleType name="incodevType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="itemloc" type="itemlocType"/>
+    <xs:simpleType name="itemlocType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="avee" type="aveeType"/>
+    <xs:complexType name="aveeType">
+        <xs:sequence>
+            <xs:element ref="modelic"/>
+            <xs:element ref="sdc"/>
+            <xs:element ref="chapnum"/>
+            <xs:element ref="section"/>
+            <xs:element ref="subsect"/>
+            <xs:element ref="subject"/>
+            <xs:element ref="discode"/>
+            <xs:element ref="discodev"/>
+            <xs:element ref="incode"/>
+            <xs:element ref="incodev"/>
+            <xs:element ref="itemloc"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="sdc" type="sdcType"/>
+    <xs:simpleType name="sdcType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{1,4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="chapnum" type="chapnumType"/>
+    <xs:simpleType name="chapnumType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{2,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="section" type="sectionType"/>
+    <xs:simpleType name="sectionType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="subsect" type="subsectType"/>
+    <xs:simpleType name="subsectType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="subject" type="subjectType"/>
+    <xs:simpleType name="subjectType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([A-Za-z0-9]{2}|[A-Za-z0-9]{4})"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="dmtitle" type="dmtitleType"/>
+    <xs:complexType name="dmtitleType">
+        <xs:sequence>
+            <xs:element ref="techname"/>
+            <xs:element minOccurs="0" ref="infoname"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="techname" type="xs:string"/>
+    <xs:element name="infoname" type="xs:string"/>
+    <xs:attribute name="issno" type="issnoAttType"/>
+    <xs:simpleType name="issnoAttType">
+        <xs:restriction base="xs:nonNegativeInteger">
+            <xs:pattern value="\d{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="issno" type="issnoType"/>
+    <xs:complexType name="issnoType">
+        <xs:attribute ref="issno" use="required"/>
+        <xs:attribute ref="inwork"/>
+        <xs:attribute default="new" ref="type"/>
+    </xs:complexType>
+    <xs:attribute name="inwork" type="NONNEGI2"/>
+    <xs:simpleType name="NONNEGI2">
+        <xs:restriction base="xs:nonNegativeInteger">
+            <xs:pattern value="\d{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attribute name="type" type="typeType"/>
+    <xs:simpleType name="typeType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="new"/>
+            <xs:enumeration value="changed"/>
+            <xs:enumeration value="deleted"/>
+            <xs:enumeration value="revised"/>
+            <xs:enumeration value="status"/>
+            <xs:enumeration value="rinstate-changed"/>
+            <xs:enumeration value="rinstate-revised"/>
+            <xs:enumeration value="rinstate-status"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="crefdmls" type="crefdmlsType"/>
+    <xs:complexType name="crefdmlsType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" ref="dmlref"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="dmlref" type="dmlrefType"/>
+    <xs:complexType name="dmlrefType">
+        <xs:choice>
+            <xs:sequence>
+                <xs:element ref="dmlc"/>
+                <xs:element minOccurs="0" ref="issno"/>
+            </xs:sequence>
+            <xs:group maxOccurs="unbounded" minOccurs="0" ref="xlink:XLINKEXT"/>
+        </xs:choice>
+        <xs:attributeGroup ref="xlink:XLINKATT4"/>
+    </xs:complexType>
+    <xs:element name="dmlc" type="dmlcType"/>
+    <xs:complexType name="dmlcType">
+        <xs:sequence>
+            <xs:element ref="modelic"/>
+            <xs:element ref="sendid"/>
+            <xs:element ref="dmltype"/>
+            <xs:element ref="diyear"/>
+            <xs:element ref="seqnum"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="dmltype" type="dmltypeType"/>
+    <xs:complexType name="dmltypeType">
+        <xs:attribute name="type" type="dmltypeAttType" use="required"/>
+    </xs:complexType>
+    <xs:simpleType name="dmltypeAttType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="c"/>
+            <xs:enumeration value="p"/>
+            <xs:enumeration value="s"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="crefpms" type="crefpmsType"/>
+    <xs:complexType name="crefpmsType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" ref="crefpm"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="crefpm" type="crefpmType"/>
+    <xs:complexType name="crefpmType">
+        <xs:choice>
+            <xs:sequence>
+                <xs:element ref="pmc"/>
+                <xs:element minOccurs="0" ref="pmtitle"/>
+                <xs:element minOccurs="0" ref="issno"/>
+                <xs:element minOccurs="0" ref="issdate"/>
+                <xs:element minOccurs="0" ref="language"/>
+            </xs:sequence>
+            <xs:group maxOccurs="unbounded" minOccurs="0" ref="xlink:XLINKEXT"/>
+        </xs:choice>
+        <xs:attributeGroup ref="xlink:XLINKATT4"/>
+    </xs:complexType>
+    <xs:element name="pmc" type="pmcType"/>
+    <xs:complexType name="pmcType">
+        <xs:sequence>
+            <xs:element ref="modelic"/>
+            <xs:element ref="pmissuer"/>
+            <xs:element ref="pmnumber"/>
+            <xs:element ref="pmvolume"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="pmissuer" type="pmissuerType"/>
+    <xs:simpleType name="pmissuerType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="pmnumber" type="pmnumberType"/>
+    <xs:simpleType name="pmnumberType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="pmvolume" type="NONNEGI2"/>
+    <xs:element name="pmtitle" type="xs:string"/>
+    <xs:element name="crefddns" type="crefddnsType"/>
+    <xs:complexType name="crefddnsType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" ref="crefddn"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="crefddn" type="crefddnType"/>
+    <xs:complexType name="crefddnType">
+        <xs:choice>
+            <xs:sequence>
+                <xs:element ref="ddnc"/>
+                <xs:element minOccurs="0" ref="issdate"/>
+            </xs:sequence>
+            <xs:group maxOccurs="unbounded" minOccurs="0" ref="xlink:XLINKEXT"/>
+        </xs:choice>
+        <xs:attributeGroup ref="xlink:XLINKATT4"/>
+    </xs:complexType>
+    <xs:element name="ddnc" type="ddncType"/>
+    <xs:complexType name="ddncType">
+        <xs:sequence>
+            <xs:element ref="modelic"/>
+            <xs:element ref="sendid"/>
+            <xs:element ref="recvid"/>
+            <xs:element ref="diyear"/>
+            <xs:element ref="seqnum"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="recvid" type="xs:string"/>
+    <xs:element name="remarks" type="remarksType"/>
+    <xs:complexType mixed="true" name="remarksType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="p"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ccontent" type="ccontentType"/>
+    <xs:complexType name="ccontentType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" ref="p"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="refcattach"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="refcattach" type="refcattachType"/>
+    <xs:complexType name="refcattachType">
+        <xs:sequence>
+            <xs:group maxOccurs="unbounded" minOccurs="0" ref="xlink:XLINKEXT"/>
+        </xs:sequence>
+        <xs:attribute name="seqatt" type="seqattType" use="required"/>
+        <xs:attribute ref="extend" use="required"/>
+        <xs:attributeGroup ref="xlink:XLINKATT4"/>
+    </xs:complexType>
+    <xs:simpleType name="seqattType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:totalDigits fixed="true" value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attribute name="extend" type="xs:string"/>
+</xs:schema>
